@@ -19,9 +19,9 @@ int main()
 	FillRand(arr, n);
 	Print(arr, n);
 
-	// вычисляем кол-во элиментов массива 
 	int even_count = 0;
 	int odd_count = 0;
+	// вычисляем кол-во элиментов массива 
 	for (int i = 0; i < n; i++)
 	{
 		if (arr[i] % 2 == 0) even_count++;
@@ -33,22 +33,15 @@ int main()
 	int* even_arr = new int[even_count];
 	int* odd_arr = new int[odd_count];
 
+	// распределение значений
 	for (int i = 0, j = 0, k = 0; i < n; i++)
 	{
-		/*if (arr[i] % 2 == 0)
-		{
-			even_arr[j] = arr[i];
-			j++;
-		}
-		else 
-		{
-			odd_arr[k] = arr[i];
-			k++;
-		}*/
-
-		(arr[i] % 2 == 0 ? even_arr[j++] : odd_arr[k++]) = arr[i];
+		if (arr[i] % 2 == 0)
+			even_arr[j++] = arr[i];
+		else
+			odd_arr[k++] = arr[i];
 	}
-
+	// вывод массивов
 	cout << "Even arr: "; Print_even(even_arr, even_count);
 	cout << "Odd arr: "; Print_odd(odd_arr, odd_count);
 	
