@@ -1,5 +1,7 @@
-#include<iostream>
-using namespace std;
+ï»¿#include<iostream>
+using std::cin;
+using std::cout;
+using std::endl;
 
 #define TAB "\t"
 
@@ -20,21 +22,23 @@ int main()
 {
 	setlocale(LC_ALL, "");
 #ifdef DINAMIC_MEMORY_1
-	/*int n;
+	int n;
 	cout << "n = "; cin >> n;
 	int *arr = new int[n];
 	int value;
 	cout << "value = "; cin >> value;
 
 	FillRand(arr, n);
-	cout << "âûâîä ìàññèâà = ";  Print(arr, n);
+	cout << "Ð²Ñ‹Ð²Ð¾Ð´ Ð¼Ð°ÑÑÐ¸Ð²Ð° = ";  Print(arr, n);
 
 	cout << "value = "; cin >> value;
 	arr = push_back(arr, n, value);
-	cout << "âûâîä èçìåí¸ííîãî ìàññèâà2 = "; Print(arr, n);
+	cout << "Ð²Ñ‹Ð²Ð¾Ð´ Ð¸Ð·Ð¼ÐµÐ½Ñ‘Ð½Ð½Ð¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°2 = "; Print(arr, n);
 
 	arr = pop_back(arr, n);
-	cout << "âûâîä èçìåí¸ííîãî ìàññèâà3 = "; Print(arr, n);*/
+	cout << "Ð²Ñ‹Ð²Ð¾Ð´ Ð¸Ð·Ð¼ÐµÐ½Ñ‘Ð½Ð½Ð¾Ð³Ð¾ Ð¼Ð°ÑÑÐ¸Ð²Ð°3 = "; Print(arr, n);
+#endif	
+
 
 	int rows, cols; 
 	cout << "rows = ";  cin >> rows;
@@ -44,13 +48,11 @@ int main()
 	
 	Print(array, rows, cols);
 
-
-#endif
-
 	for (int i = 0; i < rows; i++)
 	{
 		delete[i] array[i];
 	}
+
 	delete[] array;
 
 
