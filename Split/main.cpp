@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 using namespace std;
 
 #define TAB "\t"
@@ -21,19 +21,19 @@ int main()
 
 	int even_count = 0;
 	int odd_count = 0;
-	// вычисляем кол-во элиментов массива 
+	// РІС‹С‡РёСЃР»СЏРµРј РєРѕР»-РІРѕ СЌР»РёРјРµРЅС‚РѕРІ РјР°СЃСЃРёРІР° 
 	for (int i = 0; i < n; i++)
 	{
 		if (arr[i] % 2 == 0) even_count++;
 		else odd_count++;
 	}
-	cout << "кол-во четных элиментов: " << even_count << endl;
-	cout << "кол-во нечетных элиментов: " << odd_count << endl;
+	cout << "РєРѕР»-РІРѕ С‡РµС‚РЅС‹С… СЌР»РёРјРµРЅС‚РѕРІ: " << even_count << endl;
+	cout << "РєРѕР»-РІРѕ РЅРµС‡РµС‚РЅС‹С… СЌР»РёРјРµРЅС‚РѕРІ: " << odd_count << endl;
 
 	int* even_arr = new int[even_count];
 	int* odd_arr = new int[odd_count];
 
-	// распределение значений
+	// СЂР°СЃРїСЂРµРґРµР»РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№
 	for (int i = 0, j = 0, k = 0; i < n; i++)
 	{
 		if (arr[i] % 2 == 0)
@@ -41,7 +41,7 @@ int main()
 		else
 			odd_arr[k++] = arr[i];
 	}
-	// вывод массивов
+	// РІС‹РІРѕРґ РјР°СЃСЃРёРІРѕРІ
 	cout << "Even arr: "; Print_even(even_arr, even_count);
 	cout << "Odd arr: "; Print_odd(odd_arr, odd_count);
 	
