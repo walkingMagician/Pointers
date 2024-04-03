@@ -5,18 +5,12 @@ using std::endl;
 
 #define TAB "\t"
 
-void FillRand(int *arr, int n);
-void Print(int *arr, int n);
-int* push_back(int *arr, int& n, int value);
-int* push_front(int* arr, int& n, int value);
+void 
 
-int* pop_back(int* arr, int& n);
-
-#define DINAMIC_MEMORY_1
-#define DINAMIC_MEMORY_2
-
-void Print(int** array, int rows, int cols);
-
+int* push_back(int* array, int& n, int value);
+int* push_front(int* array, int&, int value);
+int* insert(int* array, int& n, int value, int index);
+int* pop_back(int* array, int& n);
 
 int main()
 {
@@ -88,53 +82,105 @@ void Print(int** array, int rows, int cols)
 	}
 }
 
-int* push_back(int *arr, int& n, int value)
-{
-	int *buffer = new int[n + 1];
+	int n;
+	int value, index = 4;
+
+	cout << "строчек в массиве: "; cin >> n;
+	cout << endl;
+
+	int* array = new int[n];
+
+	FillRand(array, n);
+	cout << "вывод массива: "; Print(array, n);
+	cout << endl;
+
+	cout << "value в массиве: "; cin >> value;
 	
-	for (int i = 0; i < n; i++)
-	{
-		buffer[i] = arr[i];
-	}
+	array = push_back(array, n, value);
+	Print(array, n); 
+	cout << endl;
 
-	delete[] arr;
+	cout << "value в массиве: "; cin >> value;
+	array = push_front(array, n, value);
+	Print(array, n);
+	cout << endl;
+	cout << endl;
 
-	arr = buffer;
+	array = insert(array, n, value, index);
+	Print(array, n);
+	cout << endl;
+	
+	array = pop_back(array, n);
+	Print(array, n); 
+	cout << endl;
+	cout << endl;
 
-	arr[n] = value;
-
-	n++;
-
-	return arr;
+	
 }
 
-int* push_front(int* arr, int& n, int value)
+void FillRand(int* array, int n)
+{
+	for (int i = 0; i < n; i++)
+		array[i] = rand() % 100;
+}
+
+void Print(int* array, int n)
+{
+	for (int i = 0; i < n; i++)
+		cout << array[i] << TAB;
+}
+
+int* push_back(int* array, int& n, int value)
 {
 	int* buffer = new int[n + 1];
-	for (int i = 0; i < n; i++)
-		{
-			buffer[i + 1] = arr[i];
-		}
 
-	delete[] arr;
+	for (int i = 0; i < n; i++)
+		buffer[i] = array[i];
+
+	delete[] array;
+
+	array = buffer;
+	array[n] = value;
+	n++ ;
+	return array;
+}
+
+int* push_front(int* array, int& n, int value)
+{
+	int* buffer = new int[n + 1];
+	
+	for (int i = 0; i < n; i++)
+		buffer[i + 1] = array[i];
+
+	delete[] array;
 
 	buffer[0] = value;
+	n++;
+
 	return buffer;
 }
 
-int* pop_back(int* arr, int& n)
+int* insert(int* array, int& n, int value, int index)
 {
-	/*int* buffer = new int[n - 1];
-	for (int i = 0; i < n - 1; i++)
-	{
-		buffer[i] = arr[i];
-	}
-	delete[] arr;
-	n--;
-	return buffer;*/
+	int* buffer = new int[n];
+	
+	for (int i = 0; i < n; i++) 
+		buffer[i] = array[i];
 
+	delete[] array;
+
+	buffer[index] = value;
+	
+	return buffer;
+}
+
+int* pop_back(int* array, int& n)
+{
 	int* buffer = new int[--n];
-	for (int i = 0; i < n; i++) buffer[i] = arr[i];
-	delete[] arr;
+	
+	for (int i = 0; i < n; i++)
+		buffer[i] = array[i];
+	
+	delete[] array;
 	return buffer;
 }
