@@ -171,3 +171,4 @@ int* erase(int* array, int& n, int index)
 
 }
 
+
