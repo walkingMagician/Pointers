@@ -14,7 +14,7 @@ int* push_front(int* array, int&, int value);
 int* insert(int* array, int& n, int value, int index);
 int* pop_back(int* array, int& n);
 int* pop_front(int* array, int& n);
-int* erase(int* array, int n);
+int* erase(int* array, int& n, int index);
 
 
 int main()
@@ -22,8 +22,7 @@ int main()
 	setlocale(LC_ALL, "");
 
 	int n;
-	int value, index = 4;
-
+	int value, index;
 
 	cout << "строчек в массиве: "; cin >> n;
 	cout << endl;
@@ -32,32 +31,42 @@ int main()
 
 	FillRand(array, n);
 	cout << "вывод массива: "; Print(array, n);
-	cout << endl;
+	cout << endl << endl;
 
-	cout << "value в массиве: "; cin >> value;
-
+	cout << "число которое хотите видеть в конце массива: "; cin >> value;
 	array = push_back(array, n, value);
+	cout << "вывод массива: ";
 	Print(array, n);
-	cout << endl;
+	cout << endl << endl;
 
-	cout << "value в массиве: "; cin >> value;
+	cout << "число которое хотите видеть вначале массива: "; cin >> value;
 	array = push_front(array, n, value);
+	cout << "вывод массива: ";
 	Print(array, n);
-	cout << endl;
-	cout << endl;
+	cout << endl << endl;
 
+	cout << "ваше число которое желаете вставить: "; cin >> value;
+	cout << "на какой позии желаете его видеть от 0 до " << n - 1 << ": "; cin >> index;
 	array = insert(array, n, value, index);
+	cout << "вывод массива: ";
 	Print(array, n);
-	cout << endl;
+	cout << endl << endl;
 
+	cout << "вывод массива с удалённым последним элементом: ";
 	array = pop_back(array, n);
 	Print(array, n);
-	cout << endl;
+	cout << endl << endl;
 
+	cout << "вывод массива с удалённым первым элементом: ";
 	array = pop_front(array, n);
 	Print(array, n);
-	cout << endl;
-	cout << endl;
+	cout << endl << endl;
+	
+	cout << "на какой позиции удалить эемент массива: "; cin >> index;
+	array = erase(array, n, index);
+	Print(array, n);
+	cout << endl << endl;
+	
 
 }
 
@@ -131,7 +140,7 @@ int* pop_back(int* array, int& n)
 
 int* pop_front(int* array, int& n)
 {
-	int* buffer = new int[n];
+	int* buffer = new int[n + 1];
 
 	for (int i = 0; i < n; i++)
 		buffer[i] = array[i];
@@ -144,7 +153,21 @@ int* pop_front(int* array, int& n)
 	return buffer;
 }
 
-int* erase(int* array, int n)
+int* erase(int* array, int& n, int index)
 {
-	int* buffer = new int[n];
+	int* buffer = new int[n + 1];
+	
+	for (int i = 0; i < n; i++)
+		buffer[i] = array[i];
+	
+	
+	for (int i = index - 1; i < n; i++)
+		buffer[i] = buffer[i + 1];
+
+	delete[] array;
+	n--;
+	
+	return buffer;
+
 }
+
