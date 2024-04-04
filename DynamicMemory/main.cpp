@@ -1,4 +1,5 @@
-ï»¿#include<iostream>
+#include <iostream>
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -12,6 +13,8 @@ int* push_back(int* array, int& n, int value);
 int* push_front(int* array, int&, int value);
 int* insert(int* array, int& n, int value, int index);
 int* pop_back(int* array, int& n);
+int* pop_front(int* array, int& n);
+
 
 int main()
 {
@@ -20,22 +23,23 @@ int main()
 	int n;
 	int value, index = 4;
 
-	cout << "ÑÑ‚Ñ€Ğ¾Ñ‡ĞµĞº Ğ² Ğ¼Ğ°ÑÑĞ¸Ğ²Ğµ: "; cin >> n;
+
+	cout << "ñòğî÷åê â ìàññèâå: "; cin >> n;
 	cout << endl;
 
 	int* array = new int[n];
 
 	FillRand(array, n);
-	cout << "Ğ²Ñ‹Ğ²Ğ¾Ğ´ Ğ¼Ğ°ÑÑĞ¸Ğ²Ğ°: "; Print(array, n);
+	cout << "âûâîä ìàññèâà: "; Print(array, n);
 	cout << endl;
 
-	cout << "value Ğ² Ğ¼Ğ°ÑÑĞ¸Ğ²Ğµ: "; cin >> value;
+	cout << "value â ìàññèâå: "; cin >> value;
 
 	array = push_back(array, n, value);
 	Print(array, n);
 	cout << endl;
 
-	cout << "value Ğ² Ğ¼Ğ°ÑÑĞ¸Ğ²Ğµ: "; cin >> value;
+	cout << "value â ìàññèâå: "; cin >> value;
 	array = push_front(array, n, value);
 	Print(array, n);
 	cout << endl;
@@ -48,48 +52,21 @@ int main()
 	array = pop_back(array, n);
 	Print(array, n);
 	cout << endl;
+
+	array = pop_front(array, n);
+	Print(array, n);
+	cout << endl;
 	cout << endl;
 
-
 }
 
-void FillRand(int* array, int n)
-{
-	for (int i = 0; i < n; i++)
-	{
-		array[i] = rand() % 100;
-	}
-}
-
-void Print(int* array, int n)
-{
-
-	for (int i = 0; i < n; i++)
-	{
-		cout << array[i] << TAB;
-	}
-	cout << endl;
-}
-
-void Print(int** array, int rows, int cols)
-{
-	for (int i = 0; i < rows; i++)
-	{
-		for (int j = 0; j < cols; j++)
-		{
-			cout << array[i][j] << TAB;
-		}
-		cout << endl;
-	}
-}
-
-void FillRand(int* array, int n)
+void FillRand(int* array, int& n)
 {
 	for (int i = 0; i < n; i++)
 		array[i] = rand() % 100;
 }
 
-void Print(int* array, int n)
+void Print(int* array, int& n)
 {
 	for (int i = 0; i < n; i++)
 		cout << array[i] << TAB;
@@ -106,14 +83,14 @@ int* push_back(int* array, int& n, int value)
 
 	array = buffer;
 	array[n] = value;
-	n++ ;
+	n++;
 	return array;
 }
 
 int* push_front(int* array, int& n, int value)
 {
 	int* buffer = new int[n + 1];
-	
+
 	for (int i = 0; i < n; i++)
 		buffer[i + 1] = array[i];
 
@@ -128,24 +105,42 @@ int* push_front(int* array, int& n, int value)
 int* insert(int* array, int& n, int value, int index)
 {
 	int* buffer = new int[n];
-	
-	for (int i = 0; i < n; i++) 
+
+	for (int i = 0; i < n; i++)
 		buffer[i] = array[i];
 
 	delete[] array;
 
 	buffer[index] = value;
-	
+
 	return buffer;
 }
 
 int* pop_back(int* array, int& n)
 {
 	int* buffer = new int[--n];
-	
+
 	for (int i = 0; i < n; i++)
 		buffer[i] = array[i];
-	
+
 	delete[] array;
 	return buffer;
 }
+
+
+int* pop_front(int* array, int& n)
+{
+	int* buffer = new int[n];
+
+	for (int i = 0; i < n; i++)
+		buffer[i] = array[i];
+
+	for (int i = 0; i < n; i++)
+		buffer[i] = buffer[i + 1];
+
+	delete[] array;
+	n--;
+	return buffer;
+}
+
+
