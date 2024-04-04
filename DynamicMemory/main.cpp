@@ -14,6 +14,7 @@ int* push_front(int* array, int&, int value);
 int* insert(int* array, int& n, int value, int index);
 int* pop_back(int* array, int& n);
 int* pop_front(int* array, int& n);
+int* erase(int* array, int n);
 
 
 int main()
@@ -143,4 +144,7 @@ int* pop_front(int* array, int& n)
 	return buffer;
 }
 
-
+int* erase(int* array, int n)
+{
+	int* buffer = new int[n];
+}
