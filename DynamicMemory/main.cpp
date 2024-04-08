@@ -4,7 +4,12 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define TAB "\t"
+#define tab "\t"
+
+int** allocate(int rows, int cols);
+void clear(int** arra, int rows);
+
+void print(int** arra, int rows, int cols);
 
 void FillRand(int* array, int& n);
 void Print(int* array, int& n);
@@ -16,11 +21,15 @@ int* pop_back(int* array, int& n);
 int* pop_front(int* array, int& n);
 int* erase(int* array, int& n, int index);
 
+//#define DYNAMIC_MEMORY_1 
+//#define DYNAMIC_MEMORY_2 
+
 
 int main()
 {
 	setlocale(LC_ALL, "");
 
+#ifdef DYNAMIC_MEMORY_1
 	int n;
 	int value, index;
 
@@ -67,6 +76,23 @@ int main()
 	Print(array, n);
 	cout << endl << endl;
 	
+#endif
+
+
+
+	int rows;
+	int cols;
+	cout << "Введите кол-во строк: "; cin >> rows;
+	cout << "Введите кол-во столбцов эелементов строки: "; cin >> cols;
+	
+	int** arra = allocate(rows, cols);
+
+	allocate(rows, cols);
+	
+	print(arra, rows, cols);
+	
+	clear(arra, rows);
+
 
 }
 
@@ -79,7 +105,7 @@ void FillRand(int* array, int& n)
 void Print(int* array, int& n)
 {
 	for (int i = 0; i < n; i++)
-		cout << array[i] << TAB;
+		cout << array[i] << tab;
 }
 
 int* push_back(int* array, int& n, int value)
@@ -171,25 +197,37 @@ int* erase(int* array, int& n, int index)
 
 }
 
-int** allocate(const int rows, const int cols)
-{ // РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РїРѕРґ РјР°СЃСЃРёРІ
-	int** arr = new int* [rows];
+int** allocate(int rows, int cols)
+{ // выделение памяти под массив
+	int** arra = new int* [rows];
 	for (int i = 0; i < rows; i++) 
 	{
-		arr[i] = new int[cols] {};
+		arra[i] = new int[cols] {};
 	}
 
-	return arr;
+	return arra;
 }
 
-void clear(int** arr, const int rows)
-{ // СѓРґР°Р»СЏРµРј СЃРЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕС‡РєРё Р° РїРѕС‚РѕРј РјР°СЃСЃРёРІ СѓРєР°Р·Р°С‚РµР»РµР№
+void print(int** arra, int rows, int cols)
+{ // вывод 2D массива в консоль 
 	for (int i = 0; i < rows; i++)
 	{
-		delete[] arr[i];
+		for (int j = 0; j < cols; j++)
+		{
+			cout << arra[i][j] << tab;
+		}
+		cout << endl;
 	}
-	delete[] arr;
-	arr = nullptr;
+}
+
+void clear(int** arra, int rows)
+{ // удаляем сначало строчки а потом массив указателей
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] arra[i];
+	}
+	delete[] arra;
+
 }
 
 
