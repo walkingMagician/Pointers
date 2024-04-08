@@ -171,4 +171,25 @@ int* erase(int* array, int& n, int index)
 
 }
 
+int** allocate(const int rows, const int cols)
+{ // выделение памяти под массив
+	int** arr = new int* [rows];
+	for (int i = 0; i < rows; i++) 
+	{
+		arr[i] = new int[cols] {};
+	}
+
+	return arr;
+}
+
+void clear(int** arr, const int rows)
+{ // удаляем сначало строчки а потом массив указателей
+	for (int i = 0; i < rows; i++)
+	{
+		delete[] arr[i];
+	}
+	delete[] arr;
+	arr = nullptr;
+}
+
 
