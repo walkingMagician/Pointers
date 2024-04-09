@@ -18,6 +18,5 @@ void main()
 		cout << *(arr + i) << "\t";
 	}
 
-
 	cout << endl;
 }
