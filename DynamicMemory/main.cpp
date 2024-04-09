@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 
 using std::cin;
 using std::cout;
@@ -8,7 +8,12 @@ using std::endl;
 
 int** allocate(int rows, int cols);
 void clear(int** arra, int rows);
+int** push_row_back(int** arra, int& rows, int cols);
+int** push_row_front(int** arra, int& rows, int cols);
+int** insert_row(int** arra, int& rows, int cols, int index);
+int** pop_row_back(int** arra, int& rows, int cols);
 
+void fillRand(int** arra, int rows, int cols);
 void print(int** arra, int rows, int cols);
 
 void FillRand(int* array, int& n);
@@ -33,45 +38,45 @@ int main()
 	int n;
 	int value, index;
 
-	cout << "строчек в массиве: "; cin >> n;
+	cout << "СЃС‚СЂРѕС‡РµРє РІ РјР°СЃСЃРёРІРµ: "; cin >> n;
 	cout << endl;
 
 	int* array = new int[n];
 
 	FillRand(array, n);
-	cout << "вывод массива: "; Print(array, n);
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР°: "; Print(array, n);
 	cout << endl << endl;
 
-	cout << "число которое хотите видеть в конце массива: "; cin >> value;
+	cout << "С‡РёСЃР»Рѕ РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ РІРёРґРµС‚СЊ РІ РєРѕРЅС†Рµ РјР°СЃСЃРёРІР°: "; cin >> value;
 	array = push_back(array, n, value);
-	cout << "вывод массива: ";
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР°: ";
 	Print(array, n);
 	cout << endl << endl;
 
-	cout << "число которое хотите видеть вначале массива: "; cin >> value;
+	cout << "С‡РёСЃР»Рѕ РєРѕС‚РѕСЂРѕРµ С…РѕС‚РёС‚Рµ РІРёРґРµС‚СЊ РІРЅР°С‡Р°Р»Рµ РјР°СЃСЃРёРІР°: "; cin >> value;
 	array = push_front(array, n, value);
-	cout << "вывод массива: ";
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР°: ";
 	Print(array, n);
 	cout << endl << endl;
 
-	cout << "ваше число которое желаете вставить: "; cin >> value;
-	cout << "на какой позии желаете его видеть от 0 до " << n - 1 << ": "; cin >> index;
+	cout << "РІР°С€Рµ С‡РёСЃР»Рѕ РєРѕС‚РѕСЂРѕРµ Р¶РµР»Р°РµС‚Рµ РІСЃС‚Р°РІРёС‚СЊ: "; cin >> value;
+	cout << "РЅР° РєР°РєРѕР№ РїРѕР·РёРё Р¶РµР»Р°РµС‚Рµ РµРіРѕ РІРёРґРµС‚СЊ РѕС‚ 0 РґРѕ " << n - 1 << ": "; cin >> index;
 	array = insert(array, n, value, index);
-	cout << "вывод массива: ";
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР°: ";
 	Print(array, n);
 	cout << endl << endl;
 
-	cout << "вывод массива с удалённым последним элементом: ";
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР° СЃ СѓРґР°Р»С‘РЅРЅС‹Рј РїРѕСЃР»РµРґРЅРёРј СЌР»РµРјРµРЅС‚РѕРј: ";
 	array = pop_back(array, n);
 	Print(array, n);
 	cout << endl << endl;
 
-	cout << "вывод массива с удалённым первым элементом: ";
+	cout << "РІС‹РІРѕРґ РјР°СЃСЃРёРІР° СЃ СѓРґР°Р»С‘РЅРЅС‹Рј РїРµСЂРІС‹Рј СЌР»РµРјРµРЅС‚РѕРј: ";
 	array = pop_front(array, n);
 	Print(array, n);
 	cout << endl << endl;
 	
-	cout << "на какой позиции удалить эемент массива: "; cin >> index;
+	cout << "РЅР° РєР°РєРѕР№ РїРѕР·РёС†РёРё СѓРґР°Р»РёС‚СЊ СЌРµРјРµРЅС‚ РјР°СЃСЃРёРІР°: "; cin >> index;
 	array = erase(array, n, index);
 	Print(array, n);
 	cout << endl << endl;
@@ -80,16 +85,27 @@ int main()
 
 
 
-	int rows;
-	int cols;
-	cout << "Введите кол-во строк: "; cin >> rows;
-	cout << "Введите кол-во столбцов эелементов строки: "; cin >> cols;
+	int rows, cols; // rows - СЃС‚РѕР»Р±РµС†, cols - СЃС‚СЂРѕРєР°
+	int index = 3;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СЃС‚СЂРѕРє: "; cin >> rows;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»-РІРѕ СЃС‚РѕР»Р±С†РѕРІ СЌРµР»РµРјРµРЅС‚РѕРІ СЃС‚СЂРѕРєРё: "; cin >> cols;
 	
 	int** arra = allocate(rows, cols);
 
 	allocate(rows, cols);
 	
+	fillRand(arra, rows, cols);
 	print(arra, rows, cols);
+
+	arra = push_row_back(arra, rows, cols); 
+	print(arra, rows, cols);
+	
+	arra = push_row_front(arra, rows, cols);
+	print(arra, rows, cols);
+	
+	arra = insert_row(arra, rows, cols, index);
+	print(arra, rows, cols);
+
 	
 	clear(arra, rows);
 
@@ -198,7 +214,7 @@ int* erase(int* array, int& n, int index)
 }
 
 int** allocate(int rows, int cols)
-{ // выделение памяти под массив
+{ // РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РїРѕРґ РјР°СЃСЃРёРІ
 	int** arra = new int* [rows];
 	for (int i = 0; i < rows; i++) 
 	{
@@ -208,8 +224,19 @@ int** allocate(int rows, int cols)
 	return arra;
 }
 
+void fillRand(int** arra, int rows, int cols)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			arra[i][j] = rand() % 100;
+		}
+	}
+}
+
 void print(int** arra, int rows, int cols)
-{ // вывод 2D массива в консоль 
+{ // РІС‹РІРѕРґ 2D РјР°СЃСЃРёРІР° РІ РєРѕРЅСЃРѕР»СЊ 
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
@@ -218,10 +245,11 @@ void print(int** arra, int rows, int cols)
 		}
 		cout << endl;
 	}
+	cout << endl;
 }
 
 void clear(int** arra, int rows)
-{ // удаляем сначало строчки а потом массив указателей
+{ // СѓРґР°Р»СЏРµРј СЃРЅР°С‡Р°Р»Рѕ СЃС‚СЂРѕС‡РєРё Р° РїРѕС‚РѕРј РјР°СЃСЃРёРІ СѓРєР°Р·Р°С‚РµР»РµР№
 	for (int i = 0; i < rows; i++)
 	{
 		delete[] arra[i];
@@ -230,4 +258,49 @@ void clear(int** arra, int rows)
 
 }
 
+int** push_row_back(int** arra, int& rows, int cols)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++) buffer[i] = arra[i];
 
+	delete[] arra;
+	buffer[rows] = new int[cols] {};
+	rows++;
+
+	return buffer;
+}
+
+int** push_row_front(int** arra, int& rows, int cols)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++) buffer[i + 1] = arra[i];
+	
+	delete[] arra;
+	buffer[0] = new int[cols] {};
+	rows++;
+
+	return buffer;
+}
+
+int** insert_row(int** arra, int& rows, int cols, int index)
+{
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++) 
+	{
+		if (i < index - 1)
+			buffer[i] = arra[i];
+		else
+			buffer[index - 1] = new int[cols] {};
+		buffer[i + 1] = arra[i];
+	}
+
+	delete[] arra;
+	rows++;
+
+	return buffer;
+}
+
+int** pop_row_back(int** arra, int& rows, int cols)
+{
+	
+}
