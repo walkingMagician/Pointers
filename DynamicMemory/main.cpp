@@ -37,7 +37,6 @@ int* erase(int* array, int& n, int index);
 //#define DYNAMIC_MEMORY_1 
 #define DYNAMIC_MEMORY_2 
 
-
 int main()
 {
 	setlocale(LC_ALL, "");
@@ -90,7 +89,6 @@ int main()
 	cout << endl << endl;
 	
 #endif // DYNAMIC_MEMORY_1 
-
 
 #ifdef DYNAMIC_MEMORY_2
 
