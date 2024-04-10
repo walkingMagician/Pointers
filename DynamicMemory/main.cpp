@@ -35,7 +35,7 @@ int* pop_front(int* array, int& n);
 int* erase(int* array, int& n, int index);
 
 //#define DYNAMIC_MEMORY_1 
-//#define DYNAMIC_MEMORY_2 
+#define DYNAMIC_MEMORY_2 
 
 
 int main()
@@ -89,7 +89,10 @@ int main()
 	Print(array, n);
 	cout << endl << endl;
 	
-#endif
+#endif // DYNAMIC_MEMORY_1 
+
+
+#ifdef DYNAMIC_MEMORY_2
 
 
 
@@ -160,6 +163,7 @@ int main()
 
 	clear(arra, rows);
 
+#endif // DYNAMIC_MEMORY_2
 }
 
 void FillRand(int* array, int& n)
