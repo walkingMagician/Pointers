@@ -6,15 +6,23 @@ using std::endl;
 
 #define tab "\t"
 
+void fillRand(int** arra, int rows, int cols);
+void print(int** arra, int rows, int cols);
+
 int** allocate(int rows, int cols);
 void clear(int** arra, int rows);
 int** push_row_back(int** arra, int& rows, int cols);
 int** push_row_front(int** arra, int& rows, int cols);
 int** insert_row(int** arra, int& rows, int cols, int index);
 int** pop_row_back(int** arra, int& rows, int cols);
-
-void fillRand(int** arra, int rows, int cols);
-void print(int** arra, int rows, int cols);
+int** pop_row_front(int** arra, int& rows, int cols);
+int** erase_row(int** arra, int& rows, int cols, int index);
+void push_col_back(int** arra, int rows, int& cols);
+void push_col_front(int** arra, int rows, int& cols);
+void insert_col(int** arra, int rows, int& cols, int index);
+void pop_col_back(int** arra, int rows, int& cols);
+void pop_col_front(int** arra, int rows, int& cols);
+void erase_col(int** arra, int rows, int& cols, int index);
 
 void FillRand(int* array, int& n);
 void Print(int* array, int& n);
@@ -85,8 +93,8 @@ int main()
 
 
 
-	int rows, cols; // rows - столбец, cols - строка
-	int index = 3;
+	int rows, cols; // rows - строка, cols - столбец
+	int index;
 	cout << "Введите кол-во строк: "; cin >> rows;
 	cout << "Введите кол-во столбцов эелементов строки: "; cin >> cols;
 	
@@ -95,20 +103,62 @@ int main()
 	allocate(rows, cols);
 	
 	fillRand(arra, rows, cols);
+	cout << "исходный массив: " << endl;
 	print(arra, rows, cols);
 
-	arra = push_row_back(arra, rows, cols); 
+	arra = push_row_back(arra, rows, cols);
+	cout << "push_row_back: " << endl;
 	print(arra, rows, cols);
 	
 	arra = push_row_front(arra, rows, cols);
+	cout << "push_row_front: " << endl;
 	print(arra, rows, cols);
 	
+	cout << "insert_row:" << endl;
+	cout << "индекс вставки строчки: "; cin >> index;
 	arra = insert_row(arra, rows, cols, index);
 	print(arra, rows, cols);
-
 	
-	clear(arra, rows);
+	arra = pop_row_back(arra, rows, cols);
+	cout << "pop_row_back: " << endl;
+	print(arra ,rows, cols);
 
+	arra = pop_row_front(arra, rows, cols);
+	cout << "pop_row_front: " << endl;
+	print(arra, rows, cols);
+	
+	cout << "удалить строчку: "; cin >> index;
+	cout << "erase_row: " << endl;
+	arra = erase_row(arra, rows, cols, index);
+	print(arra, rows, cols);
+
+	push_col_back(arra, rows, cols);
+	cout << "push_col_back: " << endl;
+	print(arra, rows, cols);
+	
+	push_col_front(arra, rows, cols);
+	cout << "push_col_back: " << endl;
+	print(arra, rows, cols);
+	
+	cout << "индекс вставки столбца: "; cin >> index;
+	cout << "insert_col: " << endl;
+	insert_col(arra, rows, cols, index);
+	print(arra, rows, cols);
+
+	pop_col_back(arra, rows, cols);
+	cout << "pop_col_back: " << endl;
+	print(arra, rows, cols);
+
+	pop_col_front(arra, rows, cols);
+	cout << "pop_col_front: " << endl;
+	print(arra, rows, cols);
+
+	cout << "удалить столбец: "; cin >> index;
+	cout << "erase_col: " << endl;
+	erase_col(arra, rows, cols, index);
+	print(arra, rows, cols);
+
+	clear(arra, rows);
 
 }
 
@@ -179,7 +229,6 @@ int* pop_back(int* array, int& n)
 	return buffer;
 }
 
-
 int* pop_front(int* array, int& n)
 {
 	int* buffer = new int[n + 1];
@@ -213,6 +262,8 @@ int* erase(int* array, int& n, int index)
 
 }
 
+//-------------------------------------------------------------
+
 int** allocate(int rows, int cols)
 { // выделение памяти под массив
 	int** arra = new int* [rows];
@@ -225,7 +276,7 @@ int** allocate(int rows, int cols)
 }
 
 void fillRand(int** arra, int rows, int cols)
-{
+{ // заполнение массива рандом числами
 	for (int i = 0; i < rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
@@ -259,39 +310,44 @@ void clear(int** arra, int rows)
 }
 
 int** push_row_back(int** arra, int& rows, int cols)
-{
-	int** buffer = new int* [rows + 1];
-	for (int i = 0; i < rows; i++) buffer[i] = arra[i];
+{ // добовление сточки в начало
+	int** buffer = new int* [rows + 1]; // создание 2D массива
+	for (int i = 0; i < rows; i++) buffer[i] = arra[i]; // копиррование значени исходного массива в буфер
 
 	delete[] arra;
-	buffer[rows] = new int[cols] {};
+	buffer[rows] = new int[cols] {}; // добавление строчки в конец
 	rows++;
 
 	return buffer;
 }
 
 int** push_row_front(int** arra, int& rows, int cols)
-{
-	int** buffer = new int* [rows + 1];
-	for (int i = 0; i < rows; i++) buffer[i + 1] = arra[i];
+{ // добавление строчки в начало
+	int** buffer = new int* [rows + 1]; // создание 2D массива
+	for (int i = 0; i < rows; i++) buffer[i + 1] = arra[i]; // перенос значение исход массива в буфер со сдвигом на 1+ элемент впрово
 	
 	delete[] arra;
-	buffer[0] = new int[cols] {};
+	buffer[0] = new int[cols] {}; // в нулевом элементе создаётся пустая строчка 
 	rows++;
 
 	return buffer;
 }
 
 int** insert_row(int** arra, int& rows, int cols, int index)
-{
-	int** buffer = new int* [rows + 1];
+{ // добавление строчки по индексу
+	int** buffer = new int* [rows + 1]; 
+
 	for (int i = 0; i < rows; i++) 
 	{
-		if (i < index - 1)
+		if (i < index - 1) // пока i меньше значения index всё копируется нормально
+		{		// index - 1 так как массив считается от 0 до n++ 
 			buffer[i] = arra[i];
-		else
+		} 
+		else // нужен для того чтоб в нужном месте создать пустую строчку 
+		{
 			buffer[index - 1] = new int[cols] {};
-		buffer[i + 1] = arra[i];
+		}
+		buffer[i + 1] = arra[i]; // продолжение но со сдвигом на 1+ элемент впрово
 	}
 
 	delete[] arra;
@@ -301,6 +357,137 @@ int** insert_row(int** arra, int& rows, int cols, int index)
 }
 
 int** pop_row_back(int** arra, int& rows, int cols)
-{
-	
+{ // стирание последней строчки массива 
+	int** buffer = new int* [--rows]; // записуем в меньший массив
+	for (int i = 0; i < rows; i++) buffer[i] = arra[i]; 
+
+	delete[] arra;
+
+	return buffer;
 }
+
+int** pop_row_front(int** arra, int& rows, int cols)		
+{ // стирание нулевой строчки
+	int** buffer = new int* [rows + 1]; 
+	for (int i = 0; i < rows; i++) buffer[i] = arra[i];
+
+	for (int i = 0; i < rows; i++) buffer[i] = buffer[i + 1];
+	
+	delete[] arra;
+	rows--;
+
+	return buffer;
+}
+
+int** erase_row(int** arra, int& rows, int cols, int index)
+{ // стирание по индексу
+	int** buffer = new int* [rows + 1];
+	for (int i = 0; i < rows; i++)
+		buffer[i] = arra[i]; // копируем полностью массив
+
+	for (int i = index - 1; i < rows; i++) // переписуем нужную строчку на элемет справа а потом уменьшаем на 1 массив
+		buffer[i] = buffer[i +  1];
+
+	delete[] arra;
+	rows--;
+
+	return buffer;
+}
+
+void push_col_back(int** arra, int rows, int& cols)
+{ //добавление столбца в конец
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols + 1] {}; // с каждой новой итерацией i создаётся буффер
+		for (int j = 0; j < cols; j++) buffer[j] = arra[i][j];
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+	cols++;
+}
+
+void push_col_front(int** arra, int rows, int& cols)
+{ // добавление столбца в начало
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols + 1] {}; // с каждой новой итерацией i создаётся буффер
+		for (int j = 0; j < cols; j++) buffer[j + 1] = arra[i][j]; // записуем в буфеер значение со сдвигом на 1+ вправо чтоб первым элементом был ноль
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+	cols++;
+}
+
+void insert_col(int** arra, int rows, int& cols, int index)
+{ // добавление столбца по индексу
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols + 1] {};
+		for (int j = 0; j < cols; j++) 
+		{
+			if (j < index - 1) // пока j меньше index в буффер записуется значение по порядку
+			{
+				buffer[j] = arra[i][j];
+			}
+			else // создаём пустой элемент 
+			{
+				buffer[index - 1] = {};
+			}
+			buffer[j + 1] = arra[i][j];  // продолжаем записывать но уже со сдвигом вправо на 1+
+			
+		}
+
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+	cols++;
+}
+
+void pop_col_back(int** arra, int rows, int& cols)
+{ // удаление столбца в конце 
+	// нечего нового 
+	cols--;
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols] {};
+		for (int j = 0; j < cols; j++)buffer[j] = arra[i][j];
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+}
+
+void pop_col_front(int** arra, int rows, int& cols)
+{ // удаление столбца
+	cols--;
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols] {};
+		for (int j = 0; j < cols; j++)
+		{
+			buffer[j] = arra[i][j + 1];
+		}
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+}
+
+void erase_col(int** arra, int rows, int& cols, int index)
+{ // удаление столбца по индексу
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols + 1] {};
+		for (int j = 0; j < cols; j++)
+		{
+			buffer[j] = arra[i][j];
+		}
+
+		for (int j = index - 1; j < cols; j++) // переписываем нужный индекс на элемент справа
+		{
+			buffer[j] = buffer[j + 1];
+		}
+		delete[] arra[i];
+		arra[i] = buffer;
+	}
+	cols--; // уменьшаем массив чтоб стереть лишнее
+}
+
