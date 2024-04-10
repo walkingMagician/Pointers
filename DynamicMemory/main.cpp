@@ -23,7 +23,7 @@ void insert_col(int** arra, int rows, int& cols, int index);
 void pop_col_back(int** arra, int rows, int& cols);
 void pop_col_front(int** arra, int rows, int& cols);
 void erase_col(int** arra, int rows, int& cols, int index);
-
+//--------------
 void FillRand(int* array, int& n);
 void Print(int* array, int& n);
 
@@ -93,8 +93,6 @@ int main()
 
 
 #ifdef DYNAMIC_MEMORY_2
-
-
 
 	int rows, cols; // rows - строка, cols - столбец
 	int index;
